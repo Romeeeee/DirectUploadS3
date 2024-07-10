@@ -10,8 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "aws-sdk": "^2.1657.0",
+    "axios": "^1.7.2",
     "react": "18.1.0",
-    "react-native": "0.70.0"
+    "react-native": "0.70.0",
+    "react-native-image-picker": "^7.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
