@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Button, Image, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import AWS from 'aws-sdk';
+// import AWS from 'aws-sdk';
+import axios from 'axios';
 
 const App = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -43,26 +44,23 @@ const App = () => {
   };
 
   const getPresignedUrl = async (response) => {
-    const s3 = new AWS.S3({
-      region: 'ap-southeast-1',
-      accessKeyId: 'AKIA6NCY64TKZUFGX7NF',
-      secretAccessKey: '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',
-    });
-
+    // const s3 = new AWS.S3({
+    //   region: 'ap-southeast-1',
+    //   accessKeyId: 'AKIA6NCY64TKZUFGX7NF',
+    //   secretAccessKey: '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',
+    // });
+    const endpoint = "https://bk6rm39fgk.execute-api.ap-southeast-1.amazonaws.com/default/test-presignedURlL-rgie"
     const filename = generateFilename();
     const filePath = generateFilePath('PH');
 
     const params = {
-      Bucket: 'direct-upload-s3-testing',
-      Key: `${filePath}${filename}`,
-      Expires: 60, // Presigned URL expiration time in seconds
-      ContentType: response.type || 'image/jpeg',
+      key: `${filePath}${filename}`
     };
 
     try {
-      const presignedUrl = await s3.getSignedUrlPromise('putObject', params);
-      console.log(presignedUrl);
-      uploadImageToS3(response, presignedUrl);
+      const presignedUrl = await axios.post(endpoint, params);
+      console.log(presignedUrl.data);
+      uploadImageToS3(response, presignedUrl.data);
     } catch (error) {
       console.log('Error getting presigned URL:', error);
       Alert.alert('Upload Failed', 'Error getting presigned URL');
