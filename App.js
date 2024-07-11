@@ -49,7 +49,7 @@ const App = () => {
     //   accessKeyId: 'AKIA6NCY64TKZUFGX7NF',
     //   secretAccessKey: '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',
     // });
-    const endpoint = "https://bk6rm39fgk.execute-api.ap-southeast-1.amazonaws.com/default/test-presignedURlL-rgie"
+    const endpoint = "https://bzsaxp4bqh.execute-api.ap-southeast-1.amazonaws.com/default/test-getpresignedURL"
     const filename = generateFilename();
     const filePath = generateFilePath('PH');
 
@@ -58,7 +58,7 @@ const App = () => {
     };
 
     try {
-      const presignedUrl = await axios.post(endpoint, params);
+      const presignedUrl = await axios.put(endpoint, params);
       console.log(presignedUrl.data);
       uploadImageToS3(response, presignedUrl.data);
     } catch (error) {
