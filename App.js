@@ -44,11 +44,6 @@ const App = () => {
   };
 
   const getPresignedUrl = async (response) => {
-    // const s3 = new AWS.S3({
-    //   region: 'ap-southeast-1',
-    //   accessKeyId: 'AKIA6NCY64TKZUFGX7NF',
-    //   secretAccessKey: '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',
-    // });
     const endpoint = "https://bzsaxp4bqh.execute-api.ap-southeast-1.amazonaws.com/default/test-getpresignedURL"
     const filename = generateFilename();
     const filePath = generateFilePath('PH');
@@ -58,7 +53,7 @@ const App = () => {
     };
 
     try {
-      const presignedUrl = await axios.put(endpoint, params);
+      const presignedUrl = await axios.post(endpoint, params);
       console.log(presignedUrl.data);
       uploadImageToS3(response, presignedUrl.data);
     } catch (error) {
